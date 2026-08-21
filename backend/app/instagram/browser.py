@@ -53,11 +53,7 @@ class InstagramBrowser:
         # Launch Chromium
         # ----------------------------------------------------
 
-        self.browser = (
-            self.playwright.chromium.launch(
-                headless=True
-            )
-        )
+        self.browser = self.playwright.chromium.launch( headless=True, executable_path=(CHROME_EXECUTABLE_PATH) )
 
         # ----------------------------------------------------
         # Create ONE browser context
@@ -296,54 +292,125 @@ class InstagramBrowser:
         # ========================================================
         # LOGIN BUTTON
         # ========================================================
-    
-        login_buttons = [
-    
-            'button[type="submit"]',
-    
-            'button:has-text("Log in")',
-    
-            'button:has-text("Log In")',
-    
-        ]
-    
-        login_button = None
-    
-        for selector in login_buttons:
-    
-            try:
-    
-                locator = self.page.locator(
-                    selector
-                ).first
-    
-                if locator.is_visible(
-                    timeout=2000
-                ):
-    
-                    login_button = locator
-    
-                    print(
-                        f"Login button found: "
-                        f"{selector}"
-                    )
-    
-                    break
-    
-            except Exception:
-                continue
-    
-        if login_button is None:
-    
-            raise RuntimeError(
-                "Could not find Instagram "
-                "login button."
-            )
-    
+
+        # Find the REAL Instagram "Log in" button
+        login_button = self.page.locator('[role="button"][aria-label="Log In"]').first
+
+        if not login_button.count():
+            raise Exception("Could not find Instagram login button")
+
+        print("Real Instagram login button found")
+
+        # Wait until it is actually visible
+        login_button.wait_for(state="visible", timeout=10_000)
+
+        print("Login button is visible")
+
+        # Click the real button
         login_button.click()
-    
+
+        print("Login button clicked")
+
+        # Give Instagram time to process the login
+        self.page.wait_for_timeout(5000)
+
+        print(f"After login URL: {self.page.url}")
+
+        # ========================================================
+        # WAIT FOR INSTAGRAM RESPONSE
+        # ========================================================
+
+        self.page.wait_for_timeout(10_000)
+
         print(
-            "Login button clicked."
+            f"\nAfter login URL: {self.page.url}"
+        )
+
+
+        # ========================================================
+        # DEBUG PAGE CONTENT
+        # ========================================================
+
+        print("\n========== LOGIN PAGE TEXT ==========\n")
+
+        try:
+
+            text = self.page.locator(
+                "body"
+            ).inner_text(
+                timeout=5000
+            )
+
+            print(
+                text[:5000]
+            )
+
+        except Exception as e:
+
+            print(
+                f"Could not read page text: {e}"
+            )
+
+
+        # ========================================================
+        # DEBUG INPUTS AFTER SUBMISSION
+        # ========================================================
+
+        print(
+            "\n========== INPUTS AFTER LOGIN ==========\n"
+        )
+
+        inputs = self.page.locator(
+            "input"
+        ).all()
+
+        print(
+            f"Inputs found: {len(inputs)}"
+        )
+
+        for i, element in enumerate(inputs):
+
+            try:
+
+                print(
+                    f"INPUT {i}: "
+                    f"type={element.get_attribute('type')} "
+                    f"name={element.get_attribute('name')} "
+                    f"value={element.get_attribute('value')}"
+                )
+
+            except Exception:
+                pass
+
+
+        # ========================================================
+        # SCREENSHOT
+        # ========================================================
+
+        try:
+
+            self.page.screenshot(
+                path="/tmp/instagram_after_login.png",
+                full_page=True
+            )
+
+            print(
+                "\nAfter-login screenshot saved."
+            )
+
+        except Exception as e:
+
+            print(
+                f"Could not save screenshot: {e}"
+            )
+
+
+        # ========================================================
+        # CURRENT URL
+        # ========================================================
+
+        print(
+            f"\nFinal login URL: {self.page.url}"
         )
     
         # ========================================================
