@@ -79,9 +79,9 @@ def get_last_reel_data(page, username, number_of_reels=NUMBER_OF_REELS):
     try:
         print(f"\nOpening: {profile_url}")
 
-        page.goto(profile_url, wait_until="domcontentloaded", timeout=30_000)
+        page.goto(profile_url, wait_until="domcontentloaded", timeout=90_000)
 
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(9000)
 
         links = page.locator("a").all()
 
