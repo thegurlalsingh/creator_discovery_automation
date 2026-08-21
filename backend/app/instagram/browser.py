@@ -14,7 +14,7 @@ class InstagramBrowser:
         self.playwright = sync_playwright().start()
 
         self.browser = self.playwright.chromium.launch(
-            headless=True, executable_path=(CHROME_EXECUTABLE_PATH)
+            headless=True
         )
 
         self.page = self.browser.new_page(user_agent=USER_AGENT)
