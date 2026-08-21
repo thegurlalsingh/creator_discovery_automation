@@ -1,0 +1,83 @@
+[
+    {
+        "username": "yujyoga",
+        "name": "YUJ YOGA Paris",
+        "contact_email": "Not Found",
+        "follower_count": 68459,
+        "profile_url": "https://www.instagram.com/yujyoga/",
+        "verified": true,
+        "bio": "Reset your body. Reveal your glow. \nInfrared yoga & Pilates studios all over Paris\nBy @heleneduvalyoga since 2014",
+        "engagement_rate": 0.19,
+        "category": "Yoga & Wellness",
+        "content_themes": [
+            "Infrared Therapy & Yoga",
+            "Yoga Sessions & Workouts",
+            "Wellness & Physical Benefits",
+            "Apparel & Movement Wear",
+            "Community & Outdoor Activities"
+        ]
+    },
+    {
+        "username": "wellnesswithmaisiee",
+        "name": "Maisie <3",
+        "contact_email": "wellnesswithmaisie1@gmail.com",
+        "follower_count": 18348,
+        "profile_url": "https://www.instagram.com/wellnesswithmaisiee/",
+        "verified": false,
+        "bio": "PT|Aspiring Dietitian\n1st Class Sport Psychology\nOnline Fitness & Nutrition Coach\nwellnesswithmaisie1@gmail.com @vilgain MAISIE10 @womensbest MAISIE",
+        "engagement_rate": 4.41,
+        "category": "Nutrition & Fitness",
+        "content_themes": [
+            "Wholefoods & Nutrition",
+            "Strength Training & Workouts",
+            "Recovery & Gut Health",
+            "Weight Loss & Fat Loss"
+        ]
+    },
+    {
+        "username": "dianakubasova",
+        "name": "Wellness | Building Wealth | High Vibes",
+        "contact_email": "Not Found",
+        "follower_count": 66100,
+        "profile_url": "https://www.instagram.com/dianakubasova/",
+        "verified": true,
+        "bio": "💍 2026 BRIDE 💍 \nAirbnb investor — Dubai • Bali • LV\nWealth • mindset • travel\nEx Miss Multiverse | Miss Europe",
+        "engagement_rate": 0.81,
+        "category": "Fashion",
+        "content_themes": [
+            "Wedding Fashion",
+            "Personal Milestones",
+            "Humor and Relatable Moments",
+            "Technology"
+        ]
+    },
+    {
+        "username": "wellness",
+        "name": "Dr. Mark Roerick",
+        "contact_email": "Not Found",
+        "follower_count": 5533,
+        "profile_url": "https://www.instagram.com/wellness/",
+        "verified": false,
+        "bio": "CEO and Co-Owner of Inspired Health and Wellness LLC with Donna Roerick CNHP. Inspiring people to live healthier lifestyles with specific coaching.",
+        "engagement_rate": null,
+        "category": null,
+        "content_themes": []
+    },
+    {
+        "username": "technologymadefun",
+        "name": "technologymadefun",
+        "contact_email": "Not Found",
+        "follower_count": 5163,
+        "profile_url": "https://www.instagram.com/technologymadefun/",
+        "verified": false,
+        "bio": "🍿 Here to make technology feel like a movie\n🧠 Follow, join our community & learn fascinating things about tech everyday\n✉️ DM for credits/removal",
+        "engagement_rate": 525.67,
+        "category": "Technology & Science",
+        "content_themes": [
+            "Robotics & Automation",
+            "Mathematical Theory & Applications",
+            "Biological Processes",
+            "Medical Imaging & Health Technology"
+        ]
+    }
+]
