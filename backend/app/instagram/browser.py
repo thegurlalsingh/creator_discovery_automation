@@ -96,169 +96,284 @@ class InstagramBrowser:
     def login(self):
 
         if not INSTAGRAM_USERNAME:
-
             raise ValueError(
-                "INSTAGRAM_USERNAME "
-                "is not set in .env"
+                "INSTAGRAM_USERNAME is not set in .env"
             )
-
+    
         if not INSTAGRAM_PASSWORD:
-
             raise ValueError(
-                "INSTAGRAM_PASSWORD "
-                "is not set in .env"
+                "INSTAGRAM_PASSWORD is not set in .env"
             )
-
-        print(
-            "\n"
-            + "=" * 70
-        )
-
-        print(
-            "INSTAGRAM AUTHENTICATION"
-        )
-
-        print(
-            "=" * 70
-        )
-
-        # ----------------------------------------------------
-        # Open Instagram login
-        # ----------------------------------------------------
-
+    
+        print("\n" + "=" * 70)
+        print("INSTAGRAM AUTHENTICATION")
+        print("=" * 70)
+    
         self.page.goto(
             "https://www.instagram.com/accounts/login/",
             wait_until="domcontentloaded",
             timeout=60_000
         )
-
-        self.page.wait_for_timeout(
-            3000
+    
+        self.page.wait_for_timeout(5000)
+    
+        print(
+            f"\nLogin page URL: {self.page.url}"
         )
-
-        # ----------------------------------------------------
-        # Check whether already logged in
-        # ----------------------------------------------------
-
-        if (
-            "/accounts/login"
-            not in self.page.url
-        ):
-
+    
+        # ========================================================
+        # DEBUG: PRINT INPUTS
+        # ========================================================
+    
+        inputs = self.page.locator("input").all()
+    
+        print(
+            f"\nInputs found: {len(inputs)}"
+        )
+    
+        for i, input_element in enumerate(inputs):
+    
+            try:
+    
+                print(
+                    f"INPUT {i}: "
+                    f"type={input_element.get_attribute('type')} "
+                    f"name={input_element.get_attribute('name')} "
+                    f"placeholder={input_element.get_attribute('placeholder')}"
+                )
+    
+            except Exception:
+                pass
+    
+        # ========================================================
+        # DEBUG: SCREENSHOT
+        # ========================================================
+    
+        try:
+    
+            self.page.screenshot(
+                path="/tmp/instagram_login.png",
+                full_page=True
+            )
+    
+            print(
+                "\nLogin screenshot saved."
+            )
+    
+        except Exception as e:
+    
+            print(
+                f"\nCould not save screenshot: {e}"
+            )
+    
+        # ========================================================
+        # CHECK WHETHER INSTAGRAM ACTUALLY SHOWED LOGIN
+        # ========================================================
+    
+        if "/accounts/login" not in self.page.url:
+    
             print(
                 "Instagram session already active."
             )
-
+    
             return
-
-        print(
-            "Logging into Instagram..."
-        )
-
-        # ----------------------------------------------------
-        # Username
-        # ----------------------------------------------------
-
-        self.page.locator(
-            'input[name="username"]'
-        ).fill(
+    
+        # ========================================================
+        # TRY MULTIPLE USERNAME SELECTORS
+        # ========================================================
+    
+        username_selectors = [
+    
+            'input[name="username"]',
+    
+            'input[autocomplete="username"]',
+    
+            'input[type="text"]',
+    
+            'input[aria-label*="username" i]',
+    
+            'input[placeholder*="username" i]',
+    
+        ]
+    
+        username_input = None
+    
+        for selector in username_selectors:
+    
+            try:
+    
+                locator = self.page.locator(
+                    selector
+                ).first
+    
+                if locator.is_visible(
+                    timeout=2000
+                ):
+    
+                    username_input = locator
+    
+                    print(
+                        f"\nUsername selector found: "
+                        f"{selector}"
+                    )
+    
+                    break
+    
+            except Exception:
+                continue
+    
+        if username_input is None:
+    
+            raise RuntimeError(
+                "Could not find Instagram "
+                "username input. "
+                "Check the login screenshot/logs."
+            )
+    
+        # ========================================================
+        # PASSWORD
+        # ========================================================
+    
+        password_selectors = [
+    
+            'input[name="password"]',
+    
+            'input[autocomplete="current-password"]',
+    
+            'input[type="password"]',
+    
+        ]
+    
+        password_input = None
+    
+        for selector in password_selectors:
+    
+            try:
+    
+                locator = self.page.locator(
+                    selector
+                ).first
+    
+                if locator.is_visible(
+                    timeout=2000
+                ):
+    
+                    password_input = locator
+    
+                    print(
+                        f"Password selector found: "
+                        f"{selector}"
+                    )
+    
+                    break
+    
+            except Exception:
+                continue
+    
+        if password_input is None:
+    
+            raise RuntimeError(
+                "Could not find Instagram "
+                "password input."
+            )
+    
+        # ========================================================
+        # FILL LOGIN
+        # ========================================================
+    
+        username_input.fill(
             INSTAGRAM_USERNAME
         )
-
-        # ----------------------------------------------------
-        # Password
-        # ----------------------------------------------------
-
-        self.page.locator(
-            'input[name="password"]'
-        ).fill(
+    
+        password_input.fill(
             INSTAGRAM_PASSWORD
         )
-
-        # ----------------------------------------------------
-        # Login button
-        # ----------------------------------------------------
-
-        self.page.locator(
-            'button[type="submit"]'
-        ).click()
-
-        # ----------------------------------------------------
-        # Wait for login
-        # ----------------------------------------------------
-
-        self.page.wait_for_timeout(
-            5000
-        )
-
+    
         print(
-            f"After login URL: "
+            "Login credentials filled."
+        )
+    
+        # ========================================================
+        # LOGIN BUTTON
+        # ========================================================
+    
+        login_buttons = [
+    
+            'button[type="submit"]',
+    
+            'button:has-text("Log in")',
+    
+            'button:has-text("Log In")',
+    
+        ]
+    
+        login_button = None
+    
+        for selector in login_buttons:
+    
+            try:
+    
+                locator = self.page.locator(
+                    selector
+                ).first
+    
+                if locator.is_visible(
+                    timeout=2000
+                ):
+    
+                    login_button = locator
+    
+                    print(
+                        f"Login button found: "
+                        f"{selector}"
+                    )
+    
+                    break
+    
+            except Exception:
+                continue
+    
+        if login_button is None:
+    
+            raise RuntimeError(
+                "Could not find Instagram "
+                "login button."
+            )
+    
+        login_button.click()
+    
+        print(
+            "Login button clicked."
+        )
+    
+        # ========================================================
+        # WAIT
+        # ========================================================
+    
+        self.page.wait_for_timeout(
+            7000
+        )
+    
+        print(
+            f"\nAfter login URL: "
             f"{self.page.url}"
         )
-
-        # ----------------------------------------------------
-        # Handle possible "Save login info"
-        # ----------------------------------------------------
-
-        try:
-
-            save_button = self.page.get_by_role(
-                "button",
-                name="Not now"
-            )
-
-            if save_button.is_visible(
-                timeout=3000
-            ):
-
-                save_button.click()
-
-                self.page.wait_for_timeout(
-                    1500
-                )
-
-        except Exception:
-            pass
-
-        # ----------------------------------------------------
-        # Handle possible notification popup
-        # ----------------------------------------------------
-
-        try:
-
-            not_now = self.page.get_by_text(
-                "Not Now",
-                exact=True
-            )
-
-            if not_now.is_visible(
-                timeout=3000
-            ):
-
-                not_now.click()
-
-                self.page.wait_for_timeout(
-                    1000
-                )
-
-        except Exception:
-            pass
-
-        # ----------------------------------------------------
-        # Verify authentication
-        # ----------------------------------------------------
-
+    
+        # ========================================================
+        # VERIFY
+        # ========================================================
+    
         if "/accounts/login" in self.page.url:
-
+    
             raise RuntimeError(
-                "Instagram login failed. "
-                "Still on login page."
+                "Instagram login did not complete. "
+                f"Current URL: {self.page.url}"
             )
-
+    
         print(
-            "Instagram authentication successful."
+            "\nInstagram authentication successful."
         )
-
+    
         print(
             "=" * 70
             + "\n"
