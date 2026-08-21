@@ -113,9 +113,9 @@ def scrape_instagram_profile(page, username, fallback_name=None):
     try:
         print(f"  Opening: {url}")
 
-        page.goto(url, wait_until="domcontentloaded", timeout=30_000)
+        page.goto(url, wait_until="domcontentloaded", timeout=90_000)
 
-        page.wait_for_timeout(2500)
+        page.wait_for_timeout(9000)
 
         html = page.content()
 
