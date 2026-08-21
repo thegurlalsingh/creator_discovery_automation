@@ -27,3 +27,8 @@ class InstagramBrowser:
 
         if self.playwright:
             self.playwright.stop()
+
+    def create_page(self):
+            if not self.browser:
+                return None
+            return self.browser.new_page(user_agent=USER_AGENT)
