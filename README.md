@@ -20,7 +20,7 @@ The platform automates the discovery-to-outreach cycle for marketing campaigns:
 
 ---
 
-## 🔄 Data Workflow
+## Data Workflow
 
 The diagram below details the data flow from the React UI configuration inputs down to database writes:
 
@@ -43,7 +43,7 @@ graph TD
 
 ---
 
-## 🗄️ Database Design
+## Database Design
 
 The relational database is hosted on Supabase (PostgreSQL) using three tables:
 
@@ -84,7 +84,7 @@ Manages generated outreach copy and outbound status logs.
 
 ---
 
-## ⚠️ Important Limitations & Free Tier Constraints
+## Important Limitations & Free Tier Constraints
 
 > [!WARNING]
 > **Outreach Sending Limitation (Database Emails)**
@@ -98,7 +98,7 @@ Manages generated outreach copy and outbound status logs.
 
 ---
 
-## 🚀 Setup & Execution Instructions
+## Setup & Execution Instructions
 
 ### Backend Setup
 1. Navigate to the backend folder:
