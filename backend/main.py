@@ -1,6 +1,7 @@
 import sys
 import uvicorn
 from app.pipeline.creator_pipeline import run_pipeline
+import os
 
 if __name__ == "__main__":
     if "--cli" in sys.argv:
