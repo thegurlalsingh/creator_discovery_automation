@@ -121,6 +121,8 @@ Manages generated outreach copy and outbound status logs.
    SOCIALCRAWL_API_KEY=your_socialcrawl_api_key
    RESEND_API_KEY=your_resend_api_key
    OUTREACH_FROM_EMAIL=your_verified_resend_email
+   INSTAGRAM_USERNAME=spam_account_username_for_authentication
+   INSTAGRAM_PASSWORD=spam_account_password_for_authentication
    ```
 5. Launch the backend API server:
    ```bash
