@@ -99,9 +99,6 @@ def get_last_reel_data(page, username, number_of_reels=NUMBER_OF_REELS):
             if href.startswith("/"):
                 href = INSTAGRAM_BASE_URL + href
 
-            if not is_same_creator_reel(href, username):
-                continue
-
             if href not in reel_urls:
                 reel_urls.append(href)
 
