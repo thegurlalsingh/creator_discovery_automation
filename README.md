@@ -6,7 +6,7 @@ The system combines creator discovery APIs, browser automation, LLM-based person
 
 ---
 
-## 🎥 Demo
+## Demo
 
 **Working Demo Video:**
 [Watch the Demo](https://drive.google.com/file/d/1zFLvLvi1X5YM9kczVlv5hpeJx0Obfs2j/view)
@@ -15,14 +15,14 @@ The demo shows the complete workflow from creator discovery and Instagram scrapi
 
 ---
 
-## 🔗 Project Repository
+## Project Repository
 
 **GitHub:**
 https://github.com/thegurlalsingh/creator_discovery_automation
 
 ---
 
-# 🚀 Project Overview
+# Project Overview
 
 Influencer outreach usually requires manually:
 
@@ -40,15 +40,15 @@ The system accepts campaign keywords and a target number of creators from the fr
 
 ---
 
-# ✨ Key Features
+# Key Features
 
-### 🔍 Automated Creator Discovery
+### Automated Creator Discovery
 
 * Searches for Instagram creators using campaign keywords.
 * Uses Socialcrawl APIs for creator discovery and account-similarity searches.
 * Filters creators based on follower count.
 
-### 📊 Creator Verification & Enrichment
+### Creator Verification & Enrichment
 
 * Opens Instagram profiles using Playwright.
 * Extracts:
@@ -61,7 +61,7 @@ The system accepts campaign keywords and a target number of creators from the fr
   * Contact email when available
   * Profile URL
 
-### 📈 Engagement Analysis
+### Engagement Analysis
 
 * Scrapes the creator's latest 5 Instagram reels.
 * Collects:
@@ -72,7 +72,7 @@ The system accepts campaign keywords and a target number of creators from the fr
   * Comments
 * Calculates engagement rate automatically.
 
-### 🤖 AI-Powered Creator Analysis
+### AI-Powered Creator Analysis
 
 The collected creator information and recent content are passed to an LLM.
 
@@ -83,7 +83,7 @@ The model:
 * Understands recent creator content.
 * Generates personalized outreach copy.
 
-### 📧 Personalized Cold Emails
+### Personalized Cold Emails
 
 Generates:
 
@@ -93,17 +93,17 @@ Generates:
 
 The generated email is typically **60–90 words** and uses the creator's actual profile/content context.
 
-### 💬 Personalized Instagram DMs
+### Personalized Instagram DMs
 
 Generates a shorter, natural Instagram DM based on the creator's niche and recent content.
 
 The generated DM is typically **15–30 words**.
 
-### 🗄️ Centralized Outreach Database
+### Centralized Outreach Database
 
 Creator information, reel metrics, AI analysis, and outreach drafts are stored in Supabase PostgreSQL.
 
-### 📤 Outreach Management
+### Outreach Management
 
 The frontend provides an outreach interface where generated messages can be reviewed and email delivery can be triggered.
 
@@ -113,7 +113,7 @@ Email status is tracked through states such as:
 
 ---
 
-# 🏗️ System Architecture
+# System Architecture
 
 ```mermaid
 graph TD
@@ -145,7 +145,7 @@ Resend -->|Delivery Result| Outreach
 
 ---
 
-# 🔄 End-to-End Workflow
+# End-to-End Workflow
 
 ## 1. Campaign Configuration
 
@@ -276,11 +276,11 @@ The extracted information is stored in the database and is also used as context 
 
 ---
 
-# 🤖 Personalized Outreach Generation
+# Personalized Outreach Generation
 
 The LLM generates two different forms of outreach.
 
-## 📧 Cold Email
+## Cold Email
 
 Each email contains:
 
@@ -315,7 +315,7 @@ The actual generated message is personalized using the creator's profile and rec
 
 ---
 
-## 💬 Instagram DM
+## Instagram DM
 
 The system also generates a shorter DM designed for Instagram.
 
@@ -331,7 +331,7 @@ The final generated DM is customized per creator.
 
 ---
 
-# 🗄️ Database Design
+# Database Design
 
 The application uses **Supabase PostgreSQL**.
 
@@ -406,7 +406,7 @@ This design keeps creator data, content data, and communication data separated w
 
 ---
 
-# 📊 Sample Influencer Dataset
+# Sample Influencer Dataset
 
 The pipeline produces a structured dataset containing creator-level information such as:
 
@@ -422,7 +422,7 @@ The pipeline produces a structured dataset containing creator-level information 
 
 ---
 
-# 📨 Sample Personalized Outreach
+# Sample Personalized Outreach
 
 The system does not use one generic message for every creator.
 
@@ -469,7 +469,7 @@ discuss one with you!
 
 ---
 
-# 🧰 Technology Stack
+# Technology Stack
 
 ## Frontend
 
@@ -509,7 +509,7 @@ discuss one with you!
 
 ---
 
-# 🔌 APIs & External Tools Used
+# APIs & External Tools Used
 
 | API / Tool          | Purpose                                                     |
 | ------------------- | ----------------------------------------------------------- |
@@ -524,7 +524,7 @@ discuss one with you!
 
 ---
 
-# 📁 Project Structure
+# Project Structure
 
 The repository is organized into separate frontend and backend components.
 
@@ -557,7 +557,7 @@ The frontend provides the control panel and outreach interface.
 
 ---
 
-# ⚙️ Setup Instructions
+# Setup Instructions
 
 ## Prerequisites
 
@@ -581,7 +581,7 @@ cd creator_discovery_automation
 
 ---
 
-# 🐍 Backend Setup
+# Backend Setup
 
 Navigate to the backend:
 
@@ -644,7 +644,7 @@ The FastAPI backend will start locally.
 
 ---
 
-# ⚛️ Frontend Setup
+# Frontend Setup
 
 Open another terminal and navigate to:
 
@@ -672,7 +672,7 @@ http://localhost:5173
 
 ---
 
-# ▶️ Running the Complete Pipeline
+# Running the Complete Pipeline
 
 Once both frontend and backend are running:
 
@@ -708,7 +708,7 @@ Once both frontend and backend are running:
 
 ---
 
-# 📤 Outreach Automation
+# Outreach Automation
 
 The outreach module supports both:
 
@@ -734,7 +734,7 @@ The generated outreach is stored against the corresponding creator, allowing the
 
 ---
 
-# ⚠️ Current Limitations
+# Current Limitations
 
 The discovery, scraping, engagement analysis, AI personalization, database storage, and outreach-generation pipeline are fully integrated.
 
@@ -774,7 +774,7 @@ For production-scale outreach, a paid contact enrichment/scraping service with h
 
 ---
 
-# 🔐 Security & Privacy
+# Security & Privacy
 
 The project requires credentials for external services.
 
@@ -793,25 +793,8 @@ Use environment variables for all secrets.
 
 ---
 
-# 🎯 Submission Requirements Checklist
 
-This project satisfies the requested submission components:
-
-* [x] GitHub repository
-* [x] README / documentation
-* [x] Working demo video
-* [x] Influencer dataset
-* [x] Personalized outreach messages
-* [x] Automated discovery-to-outreach workflow
-* [x] Database-backed creator records
-* [x] Email outreach integration
-* [x] Instagram DM generation
-* [x] Setup instructions
-* [x] APIs and tools documented
-
----
-
-# 📌 Project Links
+# Project Links
 
 ### GitHub Repository
 
@@ -823,7 +806,7 @@ https://drive.google.com/file/d/1zFLvLvi1X5YM9kczVlv5hpeJx0Obfs2j/view
 
 ---
 
-# 💡 Why This System?
+# Why This System?
 
 The main goal is to reduce the manual work involved in influencer marketing.
 
@@ -868,13 +851,3 @@ Database / Outreach Pipeline
 This makes the process **faster, repeatable, data-driven, and scalable** while keeping the generated outreach grounded in each creator's actual content.
 
 ---
-
-# 👨‍💻 Author
-
-**Gurlal Singh**
-
-Computer Science Undergraduate
-Bennett University
-
-GitHub:
-https://github.com/thegurlalsingh
