@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sse-starlette
+playwright
+beautifulsoup4
+supabase
+resend
+python-dotenv
+requests
