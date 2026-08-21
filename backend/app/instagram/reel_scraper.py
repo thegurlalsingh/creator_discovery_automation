@@ -56,42 +56,103 @@ def extract_reel_description(soup):
     return None
 
 
-def get_last_reel_data(page, username, number_of_reels=NUMBER_OF_REELS):
+def get_last_reel_data(
+    page,
+    username,
+    number_of_reels=NUMBER_OF_REELS
+):
     """
     Get latest reels for a creator.
-
-    Returns:
-
-        [
-            {
-                url,
-                description,
-                likes,
-                comments
-            }
-        ]
     """
 
     username = username.strip().lstrip("@")
 
-    profile_url = f"{INSTAGRAM_BASE_URL}/{username}/"
+    profile_url = (
+        f"{INSTAGRAM_BASE_URL}/{username}/"
+    )
 
     try:
-        print(f"\nOpening: {profile_url}")
 
-        page.goto(profile_url, wait_until="domcontentloaded", timeout=90_000)
+        print(
+            f"\nOpening: {profile_url}"
+        )
+
+        # ====================================================
+        # OPEN PROFILE
+        # ====================================================
 
         try:
-            page.wait_for_selector("a[href*='/reel/']", timeout=5000)
-        except Exception:
-            page.wait_for_timeout(2000)
 
-        links = page.locator("a").all()
+            page.goto(
+                profile_url,
+                wait_until="commit",
+                timeout=30_000
+            )
+
+        except Exception as e:
+
+            print(
+                f"Navigation warning: {e}"
+            )
+
+        # Give Instagram time to render
+        page.wait_for_timeout(5000)
+
+        print(
+            f"Current URL: {page.url}"
+        )
+
+        # ====================================================
+        # WAIT FOR REEL LINKS
+        # ====================================================
+
+        try:
+
+            page.wait_for_selector(
+                "a[href*='/reel/']",
+                timeout=15_000
+            )
+
+            print(
+                "Reel elements detected."
+            )
+
+        except Exception:
+
+            print(
+                "Reel selector not found yet."
+            )
+
+        # ====================================================
+        # SCROLL
+        # ====================================================
+
+        for _ in range(3):
+
+            page.mouse.wheel(
+                0,
+                1000
+            )
+
+            page.wait_for_timeout(
+                1500
+            )
+
+        # ====================================================
+        # COLLECT REEL LINKS
+        # ====================================================
+
+        links = page.locator(
+            "a[href*='/reel/']"
+        ).all()
 
         reel_urls = []
 
         for link in links:
-            href = link.get_attribute("href")
+
+            href = link.get_attribute(
+                "href"
+            )
 
             if not href:
                 continue
@@ -100,62 +161,140 @@ def get_last_reel_data(page, username, number_of_reels=NUMBER_OF_REELS):
                 continue
 
             if href.startswith("/"):
-                href = INSTAGRAM_BASE_URL + href
+                href = (
+                    INSTAGRAM_BASE_URL
+                    + href
+                )
 
             if href not in reel_urls:
-                reel_urls.append(href)
 
-            if len(reel_urls) >= number_of_reels:
+                reel_urls.append(
+                    href
+                )
+
+            if (
+                len(reel_urls)
+                >= number_of_reels
+            ):
                 break
 
-        print(f"\nReel URLs found: {len(reel_urls)}")
+        print(
+            f"\nReel URLs found: "
+            f"{len(reel_urls)}"
+        )
 
         for url in reel_urls:
+
             print(url)
+
+        # ====================================================
+        # SCRAPE EACH REEL
+        # ====================================================
 
         reels = []
 
-        for index, reel_url in enumerate(reel_urls, 1):
+        for index, reel_url in enumerate(
+            reel_urls,
+            1
+        ):
+
             check_stop()
 
-            print(f"\n{'=' * 70}")
+            print(
+                "\n"
+                + "=" * 70
+            )
 
-            print(f"REEL {index}/{number_of_reels}")
+            print(
+                f"REEL "
+                f"{index}/{len(reel_urls)}"
+            )
 
-            print(f"Opening: {reel_url}")
+            print(
+                f"Opening: {reel_url}"
+            )
 
-            page.goto(reel_url, wait_until="domcontentloaded", timeout=30_000)
+            try:
 
-            page.wait_for_timeout(2000)
+                page.goto(
+                    reel_url,
+                    wait_until="commit",
+                    timeout=30_000
+                )
+
+            except Exception as e:
+
+                print(
+                    f"Reel navigation warning: "
+                    f"{e}"
+                )
+
+            page.wait_for_timeout(
+                3000
+            )
 
             html = page.content()
 
-            soup = BeautifulSoup(html, "html.parser")
+            soup = BeautifulSoup(
+                html,
+                "html.parser"
+            )
 
-            description = extract_reel_description(soup)
+            description = (
+                extract_reel_description(
+                    soup
+                )
+            )
 
-            engagement = extract_engagement(description)
+            engagement = extract_engagement(
+                description
+            )
 
             reel = {
+
                 "url": reel_url,
-                "description": description,
-                "likes": engagement["likes"],
-                "comments": engagement["comments"],
+
+                "description":
+                    description,
+
+                "likes":
+                    engagement["likes"],
+
+                "comments":
+                    engagement["comments"]
             }
 
-            reels.append(reel)
+            reels.append(
+                reel
+            )
 
-            print("\nRAW DESCRIPTION:")
+            print(
+                "\nRAW DESCRIPTION:"
+            )
 
-            print(description if description else "NOT FOUND")
+            print(
+                description
+                if description
+                else "NOT FOUND"
+            )
 
-            print(f"\nLikes: {engagement['likes']:,}")
+            print(
+                f"\nLikes: "
+                f"{engagement['likes']:,}"
+            )
 
-            print(f"Comments: {engagement['comments']:,}")
+            print(
+                f"Comments: "
+                f"{engagement['comments']:,}"
+            )
 
         return reels
 
     except Exception as e:
-        print(f"\nReel scraping failed for @{username}: {e}")
+
+        print(
+            f"\nReel scraping failed "
+            f"for @{username}: {e}"
+        )
 
         return []
