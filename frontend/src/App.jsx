@@ -5,7 +5,7 @@ import PipelineTab from "./components/PipelineTab";
 import DatabaseTab from "./components/DatabaseTab";
 import OutreachTab from "./components/OutreachTab";
 
-const API_BASE = "http://https://creator-discovery-automation.onrender.com/api";
+const API_BASE = "https://creator-discovery-automation.onrender.com/api";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("pipeline"); 
