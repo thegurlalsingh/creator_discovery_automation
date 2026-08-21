@@ -118,7 +118,6 @@ def process_creator(page, profile):
     else:
         print("Engagement rate: Not Found")
 
-
     print("\n[3/4] Running LLM analysis...")
 
     llm_result = analyze_with_llm(username, reels)
@@ -168,7 +167,6 @@ def run_pipeline(keywords=None, target_profiles=None):
     creators = []
 
     try:
-
         profiles = discover_influencers(
             page, keywords=keywords, target_profiles=target_profiles
         )
@@ -190,14 +188,16 @@ def run_pipeline(keywords=None, target_profiles=None):
 
             print("#" * 70)
 
-
+            # Create a fresh isolated page context to avoid Instagram login block
+            creator_page = browser.create_page()
             try:
-                creator, reels = process_creator(page, profile)
-
+                creator, reels = process_creator(creator_page, profile)
             except Exception as e:
-                print(f"\n❌ Failed to process @{username}: {e}")
-
+                print(f"\n Failed to process @{username}: {e}")
                 continue
+            finally:
+                if creator_page:
+                    creator_page.close()
 
             creators.append(creator)
 
@@ -209,10 +209,6 @@ def run_pipeline(keywords=None, target_profiles=None):
 
                 if creator_id:
                     print(f"Supabase creator saved: @{creator.username}")
-
-                    # ====================================================
-                    # SAVE REELS
-                    # ====================================================
 
                     print("Saving reels to Supabase...")
 
@@ -257,7 +253,6 @@ def run_pipeline(keywords=None, target_profiles=None):
 
             else:
                 print("Skipping outreach because creator was not saved to Supabase.")
-
 
             try:
                 filepath = save_creator_json(creator)
