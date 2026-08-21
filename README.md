@@ -4,7 +4,7 @@ This project is an end-to-end automated platform built to discover micro-influen
 
 ---
 
-## 📖 What the Code Does & How It Works
+## What the Code Does & How It Works
 
 The platform automates the discovery-to-outreach cycle for marketing campaigns:
 
