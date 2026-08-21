@@ -53,7 +53,7 @@ class InstagramBrowser:
         # Launch Chromium
         # ----------------------------------------------------
 
-        self.browser = self.playwright.chromium.launch( headless=True, executable_path=(CHROME_EXECUTABLE_PATH) )
+        self.browser = self.playwright.chromium.launch( headless=True )
 
         # ----------------------------------------------------
         # Create ONE browser context
